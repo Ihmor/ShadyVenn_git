@@ -23,3 +23,7 @@ ShadyVenn.get_colors()
 #gg_color_hue(3)
 
 package.skeleton(name = "ShadyVenn", code_files = "ShadyVenn.R")
+
+ShadyVenn.colors()
+
+ShadyVenn.print_colors()

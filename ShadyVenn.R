@@ -1,12 +1,4 @@
 ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
-	
-	color_brewer <- list("neonyellow" = "#ccff00", "red" = "#ff0000", "purple" = "#6500ff", "blue" = "#000080", "lightblue" = "#007cd2", "grassy-green" = "#7cd200", "crimson" = "#ba1a1a", "lilac" = "#d5bee0", "babyblue" = "#aed5fc", "grey" = "#808080", "green" = "#008000", "teal" = "#00ac93","black" = "#000000", "brown" = "#561a05", "aquamarine" = "#7FFFD4", "azure" = "#007FFF", "greenyellow" = "#ADFF2F", "lemon" = "#FFF700", "mint" = "#98FF98", "neongreen" = "#39FF14", "orange" = "#FF6700", "yellow" = "#FFFF00")
-	#just for ShadyVenn.get_colors(); breaks afterwards.
-	if (type =="just_color") {
-		return(color_brewer)
-	}
-	
-	
 	#formate input
 	set_names <- gsub("[[:space:]]", " ", names(input))
 	input_lists <- list( "A" =	unlist_F(input[1]), "B" =	unlist_F(input[2]),"C" =	unlist_F(input[3]),"D" =	unlist_F(input[4]))
@@ -150,11 +142,17 @@ unlist_F <- function(x){
 	unlist(x, use.names = FALSE)
 }
 
-####
-ShadyVenn.get_colors <- function(){
+#### print available colors
+ShadyVenn.print_colors <- function(){
 	cat("List of available colors: ")		
-	cat(names(ShadyVenn(1,1,1,"just_color")), sep = "\t-\t")
+	cat(names(ShadyVenn.colors()), sep = "\t-\t")
 }
+
+### return all avaliable colors
+ShadyVenn.colors <- function(){
+	return (list("neonyellow" = "#ccff00", "red" = "#ff0000", "purple" = "#6500ff", "blue" = "#000080", "lightblue" = "#007cd2", "grassy-green" = "#7cd200", "crimson" = "#ba1a1a", "lilac" = "#d5bee0", "babyblue" = "#aed5fc", "grey" = "#808080", "green" = "#008000", "teal" = "#00ac93","black" = "#000000", "brown" = "#561a05", "aquamarine" = "#7FFFD4", "azure" = "#007FFF", "greenyellow" = "#ADFF2F", "lemon" = "#FFF700", "mint" = "#98FF98", "neongreen" = "#39FF14", "orange" = "#FF6700", "yellow" = "#FFFF00"))
+}
+
 
 
 #### get basic SVG template.
