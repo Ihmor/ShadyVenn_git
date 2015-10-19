@@ -3,6 +3,8 @@
 # p.ihmor@gmail.com
 ################
 
+
+#test github
 # This script's main function is ShadyVenn(), which takes a basic svg file and adapts it according to the input lists using heavily gsub commands
 ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
 	#test input
