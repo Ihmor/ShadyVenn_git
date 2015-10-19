@@ -1,8 +1,13 @@
 ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
+	#test input
+	if (class(input)  != "list")  {cat("Error: Input must be a list! ");return()}
+	if ((length(input) > 4) & (length(input) < 2)) {cat("Error: Input must contain 2 to 4 sets! ");return()}
+	
+	
 	#formate input
 	set_names <- gsub("[[:space:]]", " ", names(input))
 	input_lists <- list( "A" =	unlist_F(input[1]), "B" =	unlist_F(input[2]),"C" =	unlist_F(input[3]),"D" =	unlist_F(input[4]))
-	if (type == "default") { type <- paste0(length(input),"er") }
+	if (type == "default") { type <- paste0(length(input),"er") }  #plot Venns with as many factors as possible
 	#if (substring(file_out,2,2) != ":") {wdir <- getwd()}
 	
 	
