@@ -1,4 +1,4 @@
-ShadyVenn <-function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
+ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
 	
 	color_brewer <- list("neonyellow" = "#ccff00", "red" = "#ff0000", "purple" = "#6500ff", "blue" = "#000080", "lightblue" = "#007cd2", "grassy-green" = "#7cd200", "crimson" = "#ba1a1a", "lilac" = "#d5bee0", "babyblue" = "#aed5fc", "grey" = "#808080", "green" = "#008000", "teal" = "#00ac93","black" = "#000000", "brown" = "#561a05", "aquamarine" = "#7FFFD4", "azure" = "#007FFF", "greenyellow" = "#ADFF2F", "lemon" = "#FFF700", "mint" = "#98FF98", "neongreen" = "#39FF14", "orange" = "#FF6700", "yellow" = "#FFFF00")
 	#just for ShadyVenn.get_colors(); breaks afterwards.
@@ -31,8 +31,7 @@ ShadyVenn <-function(input, file_out, color = "red", type = "default", hide_valu
 		"ABD" =	length(intersect(intersect(input_lists$A, input_lists$B), input_lists$D )),
 		"ACD" =	length(intersect(intersect(input_lists$A, input_lists$C), input_lists$D )),
 		"BCD" =	length(intersect(intersect(input_lists$B, input_lists$C), input_lists$D )),
-
-		"ABCD" =	length(intersect(intersect(input_lists$A, input_lists$B),intersect(input_lists$C, input_lists$D)))
+		"ABCD" =length(intersect(intersect(input_lists$A, input_lists$B),intersect(input_lists$C, input_lists$D)))
 	)
 	sets <- rbind(sets, "ratio" = sets/max(sets))
 	row.names(sets) <- c("counts", "ratios")
@@ -75,20 +74,20 @@ ShadyVenn <-function(input, file_out, color = "red", type = "default", hide_valu
 	
 	#change opacity of the fields
 	if 	(	length(regmatches(svg_text,regexpr("opacity:opacity_A;",svg_text)))) {
-		svg_text <- gsub("opacity:opacity_A;",     paste0("opacity:", sets[2,]$A,";")  , svg_text)
-		svg_text <- gsub("opacity:opacity_B;",     paste0("opacity:", sets[2,]$B,";")  , svg_text)
-		svg_text <- gsub("opacity:opacity_C;",     paste0("opacity:", sets[2,]$C,";")  , svg_text)
-		svg_text <- gsub("opacity:opacity_D;",     paste0("opacity:", sets[2,]$D,";")  , svg_text)
-		svg_text <- gsub("opacity:opacity_AB;",    paste0("opacity:", sets[2,]$AB,";") , svg_text)
-		svg_text <- gsub("opacity:opacity_AC;",    paste0("opacity:", sets[2,]$AC,";") , svg_text)
-		svg_text <- gsub("opacity:opacity_BC;",    paste0("opacity:", sets[2,]$BC,";") , svg_text)
+		svg_text <- gsub("opacity:opacity_A;",      paste0("opacity:", sets[2,]$A,";")  , svg_text)
+		svg_text <- gsub("opacity:opacity_B;",      paste0("opacity:", sets[2,]$B,";")  , svg_text)
+		svg_text <- gsub("opacity:opacity_C;",      paste0("opacity:", sets[2,]$C,";")  , svg_text)
+		svg_text <- gsub("opacity:opacity_D;",      paste0("opacity:", sets[2,]$D,";")  , svg_text)
+		svg_text <- gsub("opacity:opacity_AB;",     paste0("opacity:", sets[2,]$AB,";") , svg_text)
+		svg_text <- gsub("opacity:opacity_AC;",     paste0("opacity:", sets[2,]$AC,";") , svg_text)
+		svg_text <- gsub("opacity:opacity_BC;",     paste0("opacity:", sets[2,]$BC,";") , svg_text)
 		svg_text <- gsub("opacity:opacity_AD;",     paste0("opacity:", sets[2,]$AD,";")  , svg_text)
 		svg_text <- gsub("opacity:opacity_BD;",     paste0("opacity:", sets[2,]$BD,";")  , svg_text)
 		svg_text <- gsub("opacity:opacity_CD;",     paste0("opacity:", sets[2,]$CD,";")  , svg_text)
-		svg_text <- gsub("opacity:opacity_ABC;",   paste0("opacity:", sets[2,]$ABC,";"), svg_text)
-		svg_text <- gsub("opacity:opacity_ABD;",   paste0("opacity:", sets[2,]$ABD,";"), svg_text)
-		svg_text <- gsub("opacity:opacity_ACD;",   paste0("opacity:", sets[2,]$ACD,";"), svg_text)
-		svg_text <- gsub("opacity:opacity_BCD;",   paste0("opacity:", sets[2,]$BCD,";"), svg_text)
+		svg_text <- gsub("opacity:opacity_ABC;",    paste0("opacity:", sets[2,]$ABC,";"), svg_text)
+		svg_text <- gsub("opacity:opacity_ABD;",    paste0("opacity:", sets[2,]$ABD,";"), svg_text)
+		svg_text <- gsub("opacity:opacity_ACD;",    paste0("opacity:", sets[2,]$ACD,";"), svg_text)
+		svg_text <- gsub("opacity:opacity_BCD;",    paste0("opacity:", sets[2,]$BCD,";"), svg_text)
 		svg_text <- gsub("opacity:opacity_ABCD;",   paste0("opacity:", sets[2,]$ABCD,";"), svg_text)	
 	} else if (	length(regmatches(svg_text,regexpr("opacity:opacity_A\"",svg_text)))){
 		svg_text <- gsub("opacity:opacity_A\"",     paste0("opacity:", sets[2,]$A,"\"")  , svg_text)
@@ -98,14 +97,14 @@ ShadyVenn <-function(input, file_out, color = "red", type = "default", hide_valu
 		svg_text <- gsub("opacity:opacity_AB\"",    paste0("opacity:", sets[2,]$AB,"\"") , svg_text)
 		svg_text <- gsub("opacity:opacity_AC\"",    paste0("opacity:", sets[2,]$AC,"\"") , svg_text)
 		svg_text <- gsub("opacity:opacity_BC\"",    paste0("opacity:", sets[2,]$BC,"\"") , svg_text)
-		svg_text <- gsub("opacity:opacity_AD\"",     paste0("opacity:", sets[2,]$AD,"\"")  , svg_text)
-		svg_text <- gsub("opacity:opacity_BD\"",     paste0("opacity:", sets[2,]$BD,"\"")  , svg_text)
-		svg_text <- gsub("opacity:opacity_CD\"",     paste0("opacity:", sets[2,]$CD,"\"")  , svg_text)
+		svg_text <- gsub("opacity:opacity_AD\"",    paste0("opacity:", sets[2,]$AD,"\"")  , svg_text)
+		svg_text <- gsub("opacity:opacity_BD\"",    paste0("opacity:", sets[2,]$BD,"\"")  , svg_text)
+		svg_text <- gsub("opacity:opacity_CD\"",    paste0("opacity:", sets[2,]$CD,"\"")  , svg_text)
 		svg_text <- gsub("opacity:opacity_ABC\"",   paste0("opacity:", sets[2,]$ABC,"\""), svg_text)
 		svg_text <- gsub("opacity:opacity_ABD\"",   paste0("opacity:", sets[2,]$ABD,"\""), svg_text)
 		svg_text <- gsub("opacity:opacity_ACD\"",   paste0("opacity:", sets[2,]$ACD,"\""), svg_text)
 		svg_text <- gsub("opacity:opacity_BCD\"",   paste0("opacity:", sets[2,]$BCD,"\""), svg_text)
-		svg_text <- gsub("opacity:opacity_ABCD\"",   paste0("opacity:", sets[2,]$ABCD,"\""), svg_text)
+		svg_text <- gsub("opacity:opacity_ABCD\"",  paste0("opacity:", sets[2,]$ABCD,"\""), svg_text)
 	}
 	else{
 		print("Error: cant identify opacity tags in svg_base template")
@@ -128,7 +127,7 @@ ShadyVenn <-function(input, file_out, color = "red", type = "default", hide_valu
 		svg_text <- gsub("value_ACD<",   paste0(sets[1,]$ACD,"<"), svg_text)
 		svg_text <- gsub("value_ABD<",   paste0(sets[1,]$ABD,"<"), svg_text)
 		svg_text <- gsub("value_BCD<",   paste0(sets[1,]$BCD,"<"), svg_text)
-		svg_text <- gsub("value_ABCD<",   paste0(sets[1,]$ABCD,"<"), svg_text)
+		svg_text <- gsub("value_ABCD<",  paste0(sets[1,]$ABCD,"<"), svg_text)
 	} else {
 		svg_text <- gsub("value_[ABCD]*<",     paste0("<")  ,  svg_text)
 	}
