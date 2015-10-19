@@ -1,3 +1,9 @@
+# Copyright by Phillip Ihmor
+# 01.01.2015
+# p.ihmor@gmail.com
+################
+
+# This script's main function is ShadyVenn(), which takes a basic svg file and adapts it according to the input lists using heavily gsub commands
 ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
 	#test input
 	if (class(input)  != "list")  {cat("Error: Input must be a list! ");return()}
@@ -5,13 +11,11 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 	
 	
 	#formate input
-	set_names <- gsub("[[:space:]]", " ", names(input))
+	set_names <- gsub("[[:space:]]", " ", names(input))  #get names without any whitespace
 	input_lists <- list( "A" =	unlist_F(input[1]), "B" =	unlist_F(input[2]),"C" =	unlist_F(input[3]),"D" =	unlist_F(input[4]))
 	if (type == "default") { type <- paste0(length(input),"er") }  #plot Venns with as many factors as possible
 	#if (substring(file_out,2,2) != ":") {wdir <- getwd()}
-	
-	
-	
+		
 	# calculate overlap of the lists
 	sets <- data.frame(
 		"A"  =  length(setdiff(input_lists$A, union(union(input_lists$B,input_lists$C),input_lists$D))),
@@ -44,8 +48,7 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 	} else {print("Error: could not identify VennType")}
 	
 	#change color
-	color_hex <- color_brewer[[color]]
-	svg_text <- gsub("fill:#ff0000",     paste0("fill:",color_hex)  , svg_text)
+	svg_text <- gsub("fill:#ff0000",     paste0("fill:",ShadyVenn.colors[[color]])  , svg_text)
 	
 	#change set names
 	svg_text <- gsub("name_A<",     paste0(set_names[1],"<")  , svg_text)
@@ -64,6 +67,7 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 	#print(fontSize)
 	
 	svg_text <- gsub("font-size:fontSize_[ABCD]px",     paste0("font-size:",fontSize,"px")  , svg_text)
+	#if individual font sizes should be used
 	#svg_text <- gsub("font-size:fontSize_Apx",     paste0("font-size:",fontSize_sets[1],"px")  , svg_text)
 	#svg_text <- gsub("font-size:fontSize_Bpx",     paste0("font-size:",fontSize_sets[2],"px")  , svg_text)
 	#svg_text <- gsub("font-size:fontSize_Cpx",     paste0("font-size:",fontSize_sets[3],"px")  , svg_text)
@@ -129,6 +133,7 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 		svg_text <- gsub("value_[ABCD]*<",     paste0("<")  ,  svg_text)
 	}
 	
+	# set stroke widths to 0 if hide_stroke attribute is true
 	if 	(hide_stroke) {
 		svg_text <- gsub("stroke:#000000;stroke-width:2",     "stroke:#ffffff;stroke-width:2"  , svg_text)
 	}
@@ -142,7 +147,7 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 }
 
 
-#####
+##### quick unlist function, without passing on the names
 unlist_F <- function(x){
 	unlist(x, use.names = FALSE)
 }
@@ -160,7 +165,7 @@ ShadyVenn.colors <- function(){
 
 
 
-#### get basic SVG template.
+#### get non-modified SVG template.
 Venn3er_base <- function() {
 	return( 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
