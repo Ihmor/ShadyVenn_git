@@ -4,7 +4,6 @@
 ################
 
 
-#test github
 # This script's main function is ShadyVenn(), which takes a basic svg file and adapts it according to the input lists using heavily gsub commands
 ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_values = FALSE, fontSize = "default", hide_stroke = FALSE){
 	#test input
@@ -50,7 +49,7 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 	} else {print("Error: could not identify VennType")}
 	
 	#change color
-	svg_text <- gsub("fill:#ff0000",     paste0("fill:",ShadyVenn.colors[[color]])  , svg_text)
+	svg_text <- gsub("fill:#ff0000",     paste0("fill:",ShadyVenn.colors()[[color]]), svg_text)
 	
 	#change set names
 	svg_text <- gsub("name_A<",     paste0(set_names[1],"<")  , svg_text)
