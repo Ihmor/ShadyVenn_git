@@ -18,23 +18,27 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 	#if (substring(file_out,2,2) != ":") {wdir <- getwd()}
 		
 	# calculate overlap of the lists
-	sets <- data.frame(
-		"A"  =  length(setdiff(input_lists$A, union(union(input_lists$B,input_lists$C),input_lists$D))),
-		"B"  =  length(setdiff(input_lists$B, union(union(input_lists$A,input_lists$C),input_lists$D))),
-		"C"  =  length(setdiff(input_lists$C, union(union(input_lists$B,input_lists$A),input_lists$D))),
-		"D"  =  length(setdiff(input_lists$D, union(union(input_lists$B,input_lists$C),input_lists$A))),
-		"AB" =	length(intersect(input_lists$A, input_lists$B)),
-		"AC" =	length(intersect(input_lists$A, input_lists$C)),
-		"AD" =	length(intersect(input_lists$A, input_lists$D)),
-		"BC" =	length(intersect(input_lists$B, input_lists$C)),
-		"BD" =	length(intersect(input_lists$B, input_lists$D)),
-		"CD" =	length(intersect(input_lists$C, input_lists$D)),
-		"ABC" =	length(intersect(intersect(input_lists$A, input_lists$B), input_lists$C )),
-		"ABD" =	length(intersect(intersect(input_lists$A, input_lists$B), input_lists$D )),
-		"ACD" =	length(intersect(intersect(input_lists$A, input_lists$C), input_lists$D )),
-		"BCD" =	length(intersect(intersect(input_lists$B, input_lists$C), input_lists$D )),
-		"ABCD" =length(intersect(intersect(input_lists$A, input_lists$B),intersect(input_lists$C, input_lists$D)))
-	)
+	sets_names  <- ShadyVenn.sets(input_lists)
+	sets_length <- data.frame(lapply(sets_names, length))
+	sets <- sets_length
+# 	sets <- data.frame(
+# 		"A"  =  length(setdiff(input_lists$A, union(union(input_lists$B,input_lists$C),input_lists$D))),
+# 		"B"  =  length(setdiff(input_lists$B, union(union(input_lists$A,input_lists$C),input_lists$D))),
+# 		"C"  =  length(setdiff(input_lists$C, union(union(input_lists$B,input_lists$A),input_lists$D))),
+# 		"D"  =  length(setdiff(input_lists$D, union(union(input_lists$B,input_lists$C),input_lists$A))),
+# 		"AB" =	length(intersect(input_lists$A, input_lists$B)),
+# 		"AC" =	length(intersect(input_lists$A, input_lists$C)),
+# 		"AD" =	length(intersect(input_lists$A, input_lists$D)),
+# 		"BC" =	length(intersect(input_lists$B, input_lists$C)),
+# 		"BD" =	length(intersect(input_lists$B, input_lists$D)),
+# 		"CD" =	length(intersect(input_lists$C, input_lists$D)),
+# 		"ABC" =	length(intersect(intersect(input_lists$A, input_lists$B), input_lists$C )),
+# 		"ABD" =	length(intersect(intersect(input_lists$A, input_lists$B), input_lists$D )),
+# 		"ACD" =	length(intersect(intersect(input_lists$A, input_lists$C), input_lists$D )),
+# 		"BCD" =	length(intersect(intersect(input_lists$B, input_lists$C), input_lists$D )),
+# 		"ABCD" =length(intersect(intersect(input_lists$A, input_lists$B),intersect(input_lists$C, input_lists$D)))
+# 	)
+
 	sets <- rbind(sets, "ratio" = sets/max(sets))
 	row.names(sets) <- c("counts", "ratios")
 	#print(sets)
@@ -145,6 +149,28 @@ ShadyVenn <- function(input, file_out, color = "red", type = "default", hide_val
 	write(svg_text, file = file_path)
 	print(round(sets,3))
 	cat("Saved ", type, " venn, colored in ", color, ", to ",file_path,"\n", sep = "")
+}
+
+
+###### 
+ShadyVenn.sets <- function(input_lists){
+	sets <- list(
+		"A"  =  (setdiff(input_lists[[1]], union(union(input_lists[[2]],input_lists[[3]]),input_lists[[4]]))),
+		"B"  =  (setdiff(input_lists[[2]], union(union(input_lists[[1]],input_lists[[3]]),input_lists[[4]]))),
+		"C"  =  (setdiff(input_lists[[3]], union(union(input_lists[[2]],input_lists[[1]]),input_lists[[4]]))),
+		"D"  =  (setdiff(input_lists[[4]], union(union(input_lists[[2]],input_lists[[3]]),input_lists[[1]]))),
+		"AB" =	(intersect(input_lists[[1]], input_lists[[2]])),
+		"AC" =	(intersect(input_lists[[1]], input_lists[[3]])),
+		"AD" =	(intersect(input_lists[[1]], input_lists[[4]])),
+		"BC" =	(intersect(input_lists[[2]], input_lists[[3]])),
+		"BD" =	(intersect(input_lists[[2]], input_lists[[4]])),
+		"CD" =	(intersect(input_lists[[3]], input_lists[[4]])),
+		"ABC" =	(intersect(intersect(input_lists[[1]], input_lists[[2]]), input_lists[[3]] )),
+		"ABD" =	(intersect(intersect(input_lists[[1]], input_lists[[2]]), input_lists[[4]] )),
+		"ACD" =	(intersect(intersect(input_lists[[1]], input_lists[[3]]), input_lists[[4]] )),
+		"BCD" =	(intersect(intersect(input_lists[[2]], input_lists[[3]]), input_lists[[4]] )),
+		"ABCD" =(intersect(intersect(input_lists[[1]], input_lists[[2]]),intersect(input_lists[[3]], input_lists[[4]])))
+	)
 }
 
 
